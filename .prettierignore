@@ -1,0 +1,30 @@
+# Archivos de dependencias
+node_modules/
+package-lock.json
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv
+env/
+venv/
+
+# Archivos de build
+dist/
+build/
+
+# Archivos de logs
+*.log
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración específicos que no queremos formatear
+.git/
+.gitignore
+README.md

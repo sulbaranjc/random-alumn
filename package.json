@@ -1,0 +1,28 @@
+{
+  "name": "random-alumn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.{html,css,js,json}\"",
+    "format:check": "prettier --check \"**/*.{html,css,js,json}\"",
+    "format:html": "prettier --write \"templates/*.html\"",
+    "format:css": "prettier --write \"static/*.css\"",
+    "format:js": "prettier --write \"static/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sulbaranjc/random-alumn.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sulbaranjc/random-alumn/issues"
+  },
+  "homepage": "https://github.com/sulbaranjc/random-alumn#readme",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

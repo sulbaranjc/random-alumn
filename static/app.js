@@ -6,12 +6,12 @@ const elCompleto = document.getElementById("kpi-completo");
 const btnDistribuir = document.getElementById("btn-distribuir");
 const btnReset = document.getElementById("btn-reset");
 
-async function getStatus(){
+async function getStatus() {
   const res = await fetch("/api/status");
   return await res.json();
 }
 
-function render(state){
+function render(state) {
   elAsignados.textContent = state.asignados;
   elTotal.textContent = state.total;
   elCompleto.classList.toggle("hidden", !state.completo);
@@ -19,8 +19,8 @@ function render(state){
 
   elTbody.innerHTML = "";
   state.items
-    .sort((a,b)=> a.id - b.id)
-    .forEach(item=>{
+    .sort((a, b) => a.id - b.id)
+    .forEach(item => {
       const tr = document.createElement("tr");
       const tdId = document.createElement("td");
       tdId.className = "id";
@@ -43,16 +43,16 @@ function render(state){
     });
 }
 
-async function distribuir(){
+async function distribuir() {
   btnDistribuir.disabled = true; // optimista
   const res = await fetch("/api/distribuir", { method: "POST" });
   const state = await res.json();
   render(state);
 }
 
-async function reset(){
+async function reset() {
   const ok = confirm("¿Seguro que quieres reiniciar las asignaciones?");
-  if(!ok) return;
+  if (!ok) return;
   const res = await fetch("/api/reset", { method: "POST" });
   const state = await res.json();
   render(state);
