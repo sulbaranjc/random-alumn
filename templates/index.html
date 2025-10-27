@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Asignador de alumnos ←→ lenguajes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
+  <link rel="icon" href="{{ url_for('static', path='/logo.svg') }}" />
+</head>
+<body class="layout">
+  <header class="site-header">
+    <div class="brand">
+      <img src="{{ url_for('static', path='/logo.svg') }}" alt="Logo educativo" class="logo" />
+      <div class="title">
+        <h1>Asignador de alumnos</h1>
+        <p class="subtitle">Monolito FastAPI · Distribución aleatoria sin repeticiones</p>
+      </div>
+    </div>
+    <nav class="actions">
+      <button id="btn-distribuir" class="btn primary">🎲 Distribuir</button>
+      <button id="btn-reset" class="btn ghost" title="Reiniciar asignaciones">Reiniciar</button>
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <section class="card">
+      <div class="toolbar">
+        <div class="kpis">
+          <span><strong>Asignados:</strong> <span id="kpi-asignados">0</span>/<span id="kpi-total">0</span></span>
+          <span id="kpi-completo" class="badge hidden">✅ Completo</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:72px">ID</th>
+              <th>Alumno</th>
+              <th style="width:240px">Lenguaje</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-alumnos">
+            <!-- Rellenado por JS -->
+          </tbody>
+        </table>
+      </div>
+      <p class="help">Pulsa “Distribuir” para asignar un lenguaje aleatorio a un alumno que aún no tenga.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© {{ 2025 }} ILERNA · Demo pedagógica</span>
+      <span>Hecho con FastAPI · UI minimal ejecutiva</span>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', path='/app.js') }}" defer></script>
+</body>
+</html>

@@ -1,9 +1,17 @@
-# importar fastapi
-from fastapi import FastAPI
+# main.py — Monolito FastAPI con vista separada + estáticos (CSS/JS/Logo)
+from fastapi import FastAPI, Request, status
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 import random
 
 app = FastAPI()
 
+# Montar estáticos y plantillas
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
+# ------- Datos base -------
 alumnos = {
     1: "FERNANDEZ DE GOMAR ANTONIO DAVID",
     2: "SÁNCHEZ RUFINO MARIO",
@@ -28,60 +36,81 @@ lenguajes_de_programacion = {
     9: "C#"
 }
 
-# 🧠 Memoria temporal de asignaciones (no persistente)
-asignaciones_realizadas = {}
+# Memoria temporal (no persistente)
+asignaciones_realizadas: dict[int, dict] = {}
 
-# ---- Funciones auxiliares ----
-def obtener_alumno_aleatorio():
-    clave = random.choice(list(alumnos.keys()))
-    return alumnos[clave]
 
-def obtener_asignacion():
-    """Devuelve una pareja alumno + lenguaje no repetida."""
-    # Ver si ya se repartieron todos
+# ------- Lógica -------
+def distribuir_una_asignacion():
+    """Asigna un lenguaje aleatorio a un alumno sin repetir (si quedan)."""
     if len(asignaciones_realizadas) >= len(alumnos):
-        return {"mensaje": "✅ Todos los alumnos ya tienen un lenguaje asignado."}
-    
-    # Escoger alumno que aún no tenga lenguaje
+        return None
+
     alumnos_disponibles = [k for k in alumnos if k not in asignaciones_realizadas]
+    lenguajes_usados = {v["lenguaje_id"] for v in asignaciones_realizadas.values()}
+    lenguajes_disponibles = [k for k in lenguajes_de_programacion if k not in lenguajes_usados]
+
+    if not alumnos_disponibles or not lenguajes_disponibles:
+        return None
+
     alumno_id = random.choice(alumnos_disponibles)
-    
-    # Escoger lenguaje que aún no haya sido usado
-    lenguajes_disponibles = [
-        k for k in lenguajes_de_programacion
-        if k not in [v["lenguaje_id"] for v in asignaciones_realizadas.values()]
-    ]
     lenguaje_id = random.choice(lenguajes_disponibles)
-    
-    # Registrar asignación
+
     asignaciones_realizadas[alumno_id] = {
         "nombre": alumnos[alumno_id],
         "lenguaje": lenguajes_de_programacion[lenguaje_id],
         "lenguaje_id": lenguaje_id
     }
-    
+    return {"id_alumno": alumno_id, "nombre": alumnos[alumno_id], "lenguaje": lenguajes_de_programacion[lenguaje_id]}
+
+
+def estado_actual():
+    """Devuelve estructura para UI."""
+    listado = []
+    for alumno_id, nombre in alumnos.items():
+        if alumno_id in asignaciones_realizadas:
+            lang = asignaciones_realizadas[alumno_id]["lenguaje"]
+        else:
+            lang = None
+        listado.append({
+            "id": alumno_id,
+            "nombre": nombre,
+            "lenguaje": lang
+        })
     return {
-        "id_alumno": alumno_id,
-        "nombre": alumnos[alumno_id],
-        "lenguaje": lenguajes_de_programacion[lenguaje_id]
+        "total": len(alumnos),
+        "asignados": len(asignaciones_realizadas),
+        "completo": len(asignaciones_realizadas) >= len(alumnos),
+        "items": listado
     }
 
-# ---- Endpoints ----
+
+# ------- Vistas -------
+@app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {
+        "request": request
+    })
+
+
+# ------- API para la página -------
+@app.get("/api/status")
+def api_status():
+    return estado_actual()
+
+@app.post("/api/distribuir")
+def api_distribuir():
+    distribuir_una_asignacion()
+    # Devolver el nuevo estado para refrescar UI sin recargar
+    return estado_actual()
+
+@app.post("/api/reset")
+def api_reset():
+    asignaciones_realizadas.clear()
+    return estado_actual()
+
+
+# Salud
 @app.get("/health")
-def read_root():
+def health():
     return {"status": "healthy"}
-
-@app.get("/alumno")
-def alumno_aleatorio():
-    clave = random.choice(list(alumnos.keys()))
-    return {"id": clave, "nombre": alumnos[clave]}
-
-@app.get("/distribuir")
-def distribuir_alumno_lenguaje():
-    """Distribuye un alumno con un lenguaje aleatorio (sin repetir)."""
-    return obtener_asignacion()
-
-@app.get("/asignaciones")
-def ver_asignaciones():
-    """Devuelve todas las asignaciones actuales."""
-    return asignaciones_realizadas
