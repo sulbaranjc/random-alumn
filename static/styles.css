@@ -26,7 +26,18 @@ body{
   background:rgba(15,23,42,.7); backdrop-filter: blur(6px); position:sticky; top:0; z-index:10;
 }
 .brand{display:flex; gap:12px; align-items:center}
-.logo{width:40px; height:40px}
+.logo{
+  width:120px; height:120px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:rgba(15,23,42,.3);
+  box-shadow:0 4px 12px rgba(184, 40, 40, 0.3), inset 0 1px 2px rgba(34,211,238,.1);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.logo:hover{
+  transform:scale(1.02);
+  box-shadow:0 6px 16px rgba(0,0,0,.4), inset 0 1px 2px rgba(34,211,238,.2);
+}
 .title h1{font-size:1.15rem; margin:0}
 .subtitle{margin:2px 0 0 0; color:var(--muted); font-size:.9rem}
 
