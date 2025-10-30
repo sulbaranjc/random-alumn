@@ -11,9 +11,8 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 #comentarios multilina
-'''
 # ------- Datos base -------
-alumnos = {
+alumnos_dam = {
     1: "FERNANDEZ DE GOMAR ANTONIO DAVID",
     2: "SÁNCHEZ RUFINO MARIO",
     3: "CRISTOBAL ROMÁN REBECA",
@@ -24,8 +23,7 @@ alumnos = {
     8: "CORDOVA LAGUNA CARLOS SEBASTIAN",
     9: "DÍEZ CAÑETE IVÁN"
 }
-'''
-alumnos = {
+alumnos_daw = {
     1: "ALVARO ALONSO GONZALO",
     2: "HOXSAS QUIÑONES EDDY MARADONA",
     3: "GÓMEZ LALA DAVID STEVEN",
@@ -44,6 +42,10 @@ alumnos = {
     16: "OLIVARES SOTO JOSELIN YASBEL",
     17: "GUTIERREZ SIVILA MANUEL IGNACIO"
 }
+
+#asignar los alumnos solo dam a la variable alumnos
+# alumnos = alumnos_dam
+alumnos = alumnos_daw
 
 lenguajes_de_programacion = {
     1: "JavaScript",
