@@ -1,5 +1,5 @@
-// app.js — Lógica de UI (fetch API, pintar tabla y KPIs)
-const elTbody = document.getElementById("tbody-alumnos");
+// app.js — Lógica de UI (fetch API, pintar grid de estudiantes y KPIs)
+const elStudentsGrid = document.getElementById("students-grid");
 const elAsignados = document.getElementById("kpi-asignados");
 const elTotal = document.getElementById("kpi-total");
 const elCompleto = document.getElementById("kpi-completo");
@@ -17,29 +17,35 @@ function render(state) {
   elCompleto.classList.toggle("hidden", !state.completo);
   btnDistribuir.disabled = state.completo;
 
-  elTbody.innerHTML = "";
+  elStudentsGrid.innerHTML = "";
   state.items
     .sort((a, b) => a.id - b.id)
     .forEach(item => {
-      const tr = document.createElement("tr");
-      const tdId = document.createElement("td");
-      tdId.className = "id";
-      tdId.textContent = item.id;
+      const card = document.createElement("div");
+      card.className = "student-card";
 
-      const tdNombre = document.createElement("td");
-      tdNombre.className = "nombre";
-      tdNombre.textContent = item.nombre;
+      const studentInfo = document.createElement("div");
+      studentInfo.className = "student-info";
 
-      const tdLang = document.createElement("td");
-      tdLang.className = "lang";
-      tdLang.innerHTML = item.lenguaje
+      const studentId = document.createElement("div");
+      studentId.className = "student-id";
+      studentId.textContent = item.id;
+
+      const studentName = document.createElement("div");
+      studentName.className = "student-name";
+      studentName.textContent = item.nombre;
+
+      const studentLanguage = document.createElement("div");
+      studentLanguage.className = "student-language";
+      studentLanguage.innerHTML = item.lenguaje
         ? `<span class="pill ok">${item.lenguaje}</span>`
         : `<span class="pill pending">—</span>`;
 
-      tr.appendChild(tdId);
-      tr.appendChild(tdNombre);
-      tr.appendChild(tdLang);
-      elTbody.appendChild(tr);
+      studentInfo.appendChild(studentId);
+      studentInfo.appendChild(studentName);
+      card.appendChild(studentInfo);
+      card.appendChild(studentLanguage);
+      elStudentsGrid.appendChild(card);
     });
 }
 

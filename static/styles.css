@@ -118,7 +118,7 @@ body {
 
 /* Main */
 .site-main {
-  max-width: 1000px;
+  max-width: 1400px;
   width: 100%;
   margin: 20px auto;
   padding: 0 16px;
@@ -155,37 +155,71 @@ body {
   display: none;
 }
 
-.table-wrap {
-  overflow: auto;
-  border-radius: 12px;
+.students-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .students-grid {
+    grid-template-columns: 1fr;
+  }
+  .site-main {
+    max-width: 100%;
+    padding: 0 12px;
+  }
+}
+
+.student-card {
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #0b1220;
+
+.student-card:hover {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(34, 211, 238, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 211, 238, 0.1);
 }
-thead th {
-  text-align: left;
-  padding: 0.75rem;
+
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.student-id {
+  background: rgba(30, 41, 59, 0.8);
   color: var(--muted);
-  font-weight: 700;
-  background: #0a1220;
-  border-bottom: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 32px;
+  text-align: center;
 }
-tbody td {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
+
+.student-name {
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-tbody tr:hover {
-  background: rgba(34, 211, 238, 0.05);
-}
-td.id {
-  color: var(--muted);
-  width: 72px;
-}
-td.lang {
-  width: 240px;
+
+.student-language {
+  flex-shrink: 0;
 }
 
 .pill {
@@ -219,7 +253,7 @@ td.lang {
   margin-top: auto;
 }
 .footer-inner {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 12px 16px;
   color: var(--muted);
