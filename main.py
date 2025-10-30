@@ -10,7 +10,8 @@ app = FastAPI()
 # Montar estáticos y plantillas
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
-
+#comentarios multilina
+'''
 # ------- Datos base -------
 alumnos = {
     1: "FERNANDEZ DE GOMAR ANTONIO DAVID",
@@ -23,6 +24,26 @@ alumnos = {
     8: "CORDOVA LAGUNA CARLOS SEBASTIAN",
     9: "DÍEZ CAÑETE IVÁN"
 }
+'''
+alumnos = {
+    1: "ALVARO ALONSO GONZALO",
+    2: "HOXSAS QUIÑONES EDDY MARADONA",
+    3: "GÓMEZ LALA DAVID STEVEN",
+    4: "VALDÉS SILO DAVID",
+    5: "REINA SÁNCHEZ SARA VANESSA",
+    6: "CHAPARRO CABALLERO MARÍA",
+    7: "BEECKMANS BARRIENTOS NICOLE BEATRIX",
+    8: "ZAMORA TRILLO MARIA DE LOS ANGELES",
+    9: "MARTIN RODRIGUEZ SERGIO JESUS",
+    10: "CENDRERO GONZÁLEZ JUAN PEDRO",
+    11: "REQUEJO DE LA CRUZ MARCO ANTHONY",
+    12: "GÓMEZ MARTÍN MARCOS",
+    13: "GARZON TORRES ALVARO IVAN",
+    14: "PEREZ BRICEÑO PEDRO LORENZO",
+    15: "ASCUY SALINAS GEORGE",
+    16: "OLIVARES SOTO JOSELIN YASBEL",
+    17: "GUTIERREZ SIVILA MANUEL IGNACIO"
+}
 
 lenguajes_de_programacion = {
     1: "JavaScript",
@@ -33,7 +54,15 @@ lenguajes_de_programacion = {
     6: "Kotlin",
     7: "Rust",
     8: "Dart",
-    9: "C#"
+    9: "C#",
+    10: "JavaScript",
+    11: "PHP",
+    12: "Java",
+    13: "Python",
+    14: "Ruby",
+    15: "Kotlin",
+    16: "Rust",
+    17: "Dart"    
 }
 
 # Memoria temporal (no persistente)
